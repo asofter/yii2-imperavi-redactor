@@ -30,7 +30,7 @@
         "yiisoft/yii2": "*"
     },
     "autoload": {
-        "psr-0": { "yii\\imperavi-redactor\\": "" }
+        "psr-0": { "yii\\imperavi\\": "" }
     },
-    "target-dir": "yii/imperavi-redactor"
+    "target-dir": "yii/imperavi"
 }

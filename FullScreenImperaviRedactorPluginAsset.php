@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\imperavi-redactor;
+namespace yii\imperavi;
 use yii\web\AssetBundle;
 
 /**

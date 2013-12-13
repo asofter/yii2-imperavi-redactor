@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\imperavi-redactor;
+namespace yii\imperavi;
 
 use Yii;
 use yii\helpers\Json;
@@ -23,7 +23,7 @@ use yii\helpers\Json;
  *
  * @link https://github.com/asofter/yii2-imperavi-redactor
  * @link http://imperavi.com/redactor
- * @license https://github.com/yiiext/imperavi-redactor-widget/blob/master/license.md
+ * @license https://github.com/asofter/yii2-imperavi-redactor/blob/master/LICENSE.md
  */
 
 class Widget extends \yii\base\Widget
