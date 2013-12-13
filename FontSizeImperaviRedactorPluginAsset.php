@@ -12,9 +12,9 @@ use yii\web\AssetBundle;
  * @author Alexander Yaremchuk <alwex10@gmail.com>
  * @since 1.0
  */
-class FontSizeImperaviRedactorPluginAsset extends AssetBundle
+class FontsizeImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi-redactor/assets/plugins/fontsize';
+    public $sourcePath = '@yii/imperavi/assets/plugins/fontsize';
     public $js = [
         'fontsize.js'
     ];
@@ -22,6 +22,6 @@ class FontSizeImperaviRedactorPluginAsset extends AssetBundle
 
     ];
     public $depends = [
-        'yii\imperavi-redactor\ImperaviRedactorAsset'
+        'yii\imperavi\ImperaviRedactorAsset'
     ];
 }

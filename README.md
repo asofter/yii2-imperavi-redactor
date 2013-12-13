@@ -20,9 +20,7 @@ yii\imperavi\Widget::widget([
 
 	// Some options, see http://imperavi.com/redactor/docs/
 	'options' => [
-		'lang' => 'ru',
 		'toolbar' => false,
-		'iframe' => true,
 		'css' => 'wym.css',
 	],
 ]);
@@ -32,8 +30,6 @@ Alternatively you can attach Redactor to already existing DOM element by calling
 
 ```php
 yii\imperavi\Widget::widget([
-	// The textarea selector
-	'selector' => '.redactor',
 	// Some options, see http://imperavi.com/redactor/docs/
 	'options' => [],
 ]);
@@ -43,29 +39,15 @@ The redactor plugins plugged in with packages of resources.
 
 ```php
 yii\imperavi\Widget::widget([
-	'selector' => '.redactor',
 	'options' => [
 		'lang' => 'ru',
 	],
 	'plugins' => [
-		'fullscreen' => [
-			'js' => ['fullscreen.js'],
-		],
-		'clips' => [
-			// You can set base path to assets
-			'basePath' => 'application.components.imperavi.my_plugin',
-			// or url, basePath will be ignored.
-			// Defaults is url to plugis dir from assets
-			'baseUrl' => '/js/my_plugin',
-			'css' => ['clips.css'],
-			'js' => ['clips.js'],
-			// add depends packages
-			'depends' => ['imperavi-redactor'],
-		],
+		'fullscreen',
+		'clips'
 	]
 ]);
 ```
-
 
 Installation
 ------------

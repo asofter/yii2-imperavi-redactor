@@ -8,6 +8,7 @@
 namespace yii\imperavi;
 
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Json;
 
 /**
@@ -29,24 +30,35 @@ use yii\helpers\Json;
 class Widget extends \yii\base\Widget
 {
     /**
-     * @var array the HTML attributes for the widget container tag.
-     */
-    public $options = [];
-    /**
-     * @var array the options for the underlying Bootstrap JS plugin.
+     * @var array the options for the Imperavi Redactor.
      * Please refer to the corresponding [Imperavi Web page](http://imperavi.com/redactor/docs/)  for possible options.
      */
-    public $clientOptions = [];
+    public $options = [];
 
     /**
-     * @var array
+     * @var array plugins that you want to use
      */
-    private $_plugins = array();
+    public $plugins = [];
 
     /*
      * @var object model for active text area
      */
     public $model = null;
+
+    /*
+     * @var string selector for init js scripts
+     */
+    protected $selector = null;
+
+    /*
+     * @var string name of textarea tag or name of attribute
+     */
+    public $attribute = null;
+
+    /*
+     * @var string value for text area (without model)
+     */
+    public $value = '';
 
     /**
      * Initializes the widget.
@@ -68,108 +80,45 @@ class Widget extends \yii\base\Widget
         $this->selector = '#' . $this->getId();
 
         if (!is_null($this->model)) {
-            echo Html::activeTextArea($this->model, $this->attribute, $this->options);
+            echo Html::activeTextarea($this->model, $this->attribute, $this->options);
         } else {
-            echo Html::textArea($this->name, $this->value, $this->options);
+            echo Html::textarea($this->attribute, $this->value, $this->options);
         }
 
         ImperaviRedactorAsset::register($this->getView());
+        $this->registerClientScript();
     }
 
     /**
-     * Register CSS and Script.
+     * Registers Imperavi Redactor JS
      */
     protected function registerClientScript()
     {
-        // Append language file to script package.
-       /* if (isset($this->options['lang']) && $this->options['lang'] !== 'en') {
-            $this->package['js'][] = 'lang/' . $this->options['lang'] . '.js';
-        }*/
+        $view = $this->getView();
 
-        // Add assets url to relative css.
-        /*if (isset($this->options['css'])) {
-            if (!is_array($this->options['css'])) {
-                $this->options['css'] = array($this->options['css']);
-            }
-            foreach ($this->options['css'] as $i => $css) {
-                if (strpos($css, '/') === false) {
-                    $this->options['css'][$i] = $this->getAssetsUrl() . '/' . $css;
-                }
-            }
-        }*/
+        /* @todo add language support */
 
         // Insert plugins in options
-        if (!empty($this->_plugins)) {
-            $this->options['plugins'] = array_keys($this->_plugins);
+        if (!empty($this->plugins)) {
+            $this->options['plugins'] = $this->plugins;
+
+            foreach($this->options['plugins'] as $plugin) {
+                $this->registerPlugin($plugin);
+            }
         }
 
-        /*
-        $clientScript = Yii::app()->getClientScript();
-        $selector = CJavaScript::encode($this->selector);
-        $options = CJavaScript::encode($this->options);
-
-        $clientScript
-            ->addPackage(self::PACKAGE_ID, $this->package)
-            ->registerPackage(self::PACKAGE_ID)
-            ->registerScript(
-                $this->id,
-                'jQuery(' . $selector . ').redactor(' . $options . ');',
-                CClientScript::POS_READY
-            );
-
-        foreach ($this->getPlugins() as $id => $plugin) {
-            $clientScript
-                ->addPackage(self::PACKAGE_ID . '-' . $id, $plugin)
-                ->registerPackage(self::PACKAGE_ID . '-' . $id);
-        }*/
+        $options = empty($this->options) ? '' : Json::encode($this->options);
+        $js = "jQuery('" . $this->selector . "').redactor($options);";
+        $view->registerJs($js);
     }
 
     /**
      * Registers a specific Imperavi plugin and the related events
      * @param string $name the name of the Imperavi plugin
      */
-    protected function registerPlugin($name)
-    {
-        $view = $this->getView();
+    protected function registerPlugin($name) {
+        $name = "yii\\imperavi\\" . ucfirst($name) . "ImperaviRedactorPluginAsset";
 
-        ImperaviRedactorAsset::register($view);
-
-        $id = $this->options['id'];
-
-        if ($this->clientOptions !== false) {
-            $options = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
-            $js = "jQuery('#$id').$name($options);";
-            $view->registerJs($js);
-        }
-
-        if (!empty($this->clientEvents)) {
-            $js = [];
-            foreach ($this->clientEvents as $event => $handler) {
-                $js[] = "jQuery('#$id').on('$event', $handler);";
-            }
-            $view->registerJs(implode("\n", $js));
-        }
-    }
-
-    /**
-     * @param array $plugins
-     */
-    public function setPlugins(array $plugins)
-    {
-        foreach ($plugins as $id => $plugin) {
-            if (!isset($plugin['baseUrl']) && !isset($plugin['basePath'])) {
-                $plugin['baseUrl'] = $this->getAssetsUrl() . '/plugins/' . $id;
-            }
-
-            $this->_plugins[$id] = $plugin;
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getPlugins()
-    {
-        return $this->_plugins;
+        $name::register($this->getView());
     }
 }

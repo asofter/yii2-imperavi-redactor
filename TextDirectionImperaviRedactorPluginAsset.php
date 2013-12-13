@@ -12,9 +12,9 @@ use yii\web\AssetBundle;
  * @author Alexander Yaremchuk <alwex10@gmail.com>
  * @since 1.0
  */
-class TextDirectionImperaviRedactorPluginAsset extends AssetBundle
+class TextdirectionImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi-redactor/assets/plugins/textdirection';
+    public $sourcePath = '@yii/imperavi/assets/plugins/textdirection';
     public $js = [
         'textdirection.js'
     ];
@@ -22,6 +22,6 @@ class TextDirectionImperaviRedactorPluginAsset extends AssetBundle
 
     ];
     public $depends = [
-        'yii\imperavi-redactor\ImperaviRedactorAsset'
+        'yii\imperavi\ImperaviRedactorAsset'
     ];
 }

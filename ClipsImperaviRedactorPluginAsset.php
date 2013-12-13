@@ -14,7 +14,7 @@ use yii\web\AssetBundle;
  */
 class ClipsImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi-redactor/assets/plugins/clips';
+    public $sourcePath = '@yii/imperavi/assets/plugins/clips';
     public $js = [
         'clips.js',
     ];
@@ -22,6 +22,6 @@ class ClipsImperaviRedactorPluginAsset extends AssetBundle
         'clips.css'
     ];
     public $depends = [
-        'yii\imperavi-redactor\ImperaviRedactorAsset'
+        'yii\imperavi\ImperaviRedactorAsset'
     ];
 }

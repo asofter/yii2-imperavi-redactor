@@ -12,9 +12,9 @@ use yii\web\AssetBundle;
  * @author Alexander Yaremchuk <alwex10@gmail.com>
  * @since 1.0
  */
-class FontColorImperaviRedactorPluginAsset extends AssetBundle
+class FontcolorImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi-redactor/assets/plugins/fontcolor';
+    public $sourcePath = '@yii/imperavi/assets/plugins/fontcolor';
     public $js = [
         'fontcolor.js',
     ];
@@ -22,6 +22,6 @@ class FontColorImperaviRedactorPluginAsset extends AssetBundle
 
     ];
     public $depends = [
-        'yii\imperavi-redactor\ImperaviRedactorAsset'
+        'yii\imperavi\ImperaviRedactorAsset'
     ];
 }

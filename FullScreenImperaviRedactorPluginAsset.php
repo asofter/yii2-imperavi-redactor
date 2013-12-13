@@ -12,9 +12,9 @@ use yii\web\AssetBundle;
  * @author Alexander Yaremchuk <alwex10@gmail.com>
  * @since 1.0
  */
-class FullScreenImperaviRedactorPluginAsset extends AssetBundle
+class FullscreenImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi-redactor/assets/plugins/fullscreen';
+    public $sourcePath = '@yii/imperavi/assets/plugins/fullscreen';
     public $js = [
         'fullscreen.js'
     ];
@@ -22,6 +22,6 @@ class FullScreenImperaviRedactorPluginAsset extends AssetBundle
 
     ];
     public $depends = [
-        'yii\imperavi-redactor\ImperaviRedactorAsset'
+        'yii\imperavi\ImperaviRedactorAsset'
     ];
 }
