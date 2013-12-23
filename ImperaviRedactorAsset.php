@@ -17,7 +17,7 @@ class ImperaviRedactorAsset extends AssetBundle
     public $sourcePath = '@yii/imperavi/assets';
     public $js = [
         'redactor.js',
-        'lang/en.js'
+        //'lang/es.js'
     ];
     public $css = [
         'redactor.css'
