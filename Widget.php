@@ -96,7 +96,8 @@ class Widget extends \yii\base\Widget
     {
         $view = $this->getView();
 
-        /* @todo add language support */
+        if(Yii::$app->language != 'en')
+            $this->options['lang'] = strtolower(Yii::$app->language);
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
