@@ -6,6 +6,7 @@
  */
 
 namespace yii\imperavi;
+use Yii;
 use yii\web\AssetBundle;
 
 /**
@@ -16,8 +17,7 @@ class ImperaviRedactorAsset extends AssetBundle
 {
     public $sourcePath = '@yii/imperavi/assets';
     public $js = [
-        'redactor.js',
-        //'lang/es.js'
+        'redactor.js'
     ];
     public $css = [
         'redactor.css'
@@ -25,4 +25,10 @@ class ImperaviRedactorAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset'
     ];
+
+    public function init() {
+        if(Yii::$app->language != 'en')
+            $this->js[] = 'lang/' . strtolower(Yii::$app->language) . '.js';
+        parent::init();
+    }
 }
