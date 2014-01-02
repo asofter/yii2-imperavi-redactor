@@ -27,8 +27,15 @@ class ImperaviRedactorAsset extends AssetBundle
     ];
 
     public function init() {
-        if(Yii::$app->language != 'en')
-            $this->js[] = 'lang/' . strtolower(Yii::$app->language) . '.js';
+        /*
+         * Language fix
+         * @author <https://github.com/sim2github>
+         */
+        $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
+
+        if($appLanguage != 'en')
+            $this->js[] = 'lang/' . $appLanguage . '.js';
+
         parent::init();
     }
 }
