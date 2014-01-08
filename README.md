@@ -1,6 +1,8 @@
 Imperavi Redactor Widget For Yii2
 =======================
 
+Created for [Primecontext](http://primecontext.ru)
+
 `ImperaviRedactorWidget` is a wrapper for [Imperavi Redactor](http://imperavi.com/redactor/),
 a high quality WYSIWYG editor.
 
