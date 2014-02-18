@@ -36,6 +36,11 @@ class Widget extends \yii\base\Widget
     public $options = [];
 
     /**
+     * @var array the html options.
+     */
+    public $htmlOptions = [];
+
+    /**
      * @var array plugins that you want to use
      */
     public $plugins = [];
@@ -67,8 +72,8 @@ class Widget extends \yii\base\Widget
     public function init()
     {
         parent::init();
-        if (!isset($this->options['id'])) {
-            $this->options['id'] = $this->getId();
+        if (!isset($this->htmlOptions['id'])) {
+            $this->htmlOptions['id'] = $this->getId();
         }
     }
 
@@ -80,9 +85,9 @@ class Widget extends \yii\base\Widget
         $this->selector = '#' . $this->getId();
 
         if (!is_null($this->model)) {
-            echo Html::activeTextarea($this->model, $this->attribute, $this->options);
+            echo Html::activeTextarea($this->model, $this->attribute, $this->htmlOptions);
         } else {
-            echo Html::textarea($this->attribute, $this->value, $this->options);
+            echo Html::textarea($this->attribute, $this->value, $this->htmlOptions);
         }
 
         ImperaviRedactorAsset::register($this->getView());
