@@ -108,13 +108,13 @@ class Widget extends \yii\base\Widget
          */
         $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
         if($appLanguage != 'en') // By default $language = 'en-US', someone use underscore
-            $this->htmlOptions['lang'] = $appLanguage;
+            $this->options['lang'] = $appLanguage;
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
-            $this->htmlOptions['plugins'] = $this->plugins;
+            $this->options['plugins'] = $this->plugins;
 
-            foreach($this->htmlOptions['plugins'] as $plugin) {
+            foreach($this->options['plugins'] as $plugin) {
                 $this->registerPlugin($plugin);
             }
         }
