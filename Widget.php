@@ -82,7 +82,7 @@ class Widget extends \yii\base\Widget
      */
     public function run()
     {
-        $this->selector = '#' . $this->getId();
+        $this->selector = '#' . $this->htmlOptions['id'];
 
         if (!is_null($this->model)) {
             echo Html::activeTextarea($this->model, $this->attribute, $this->htmlOptions);
