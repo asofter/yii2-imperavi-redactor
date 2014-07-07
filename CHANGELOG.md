@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3
+------
+
+- Imperavi redactor, plugins and languages updated
+
 1.2
 ------
 
