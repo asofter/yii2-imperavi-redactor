@@ -1,5 +1,5 @@
 {
-    "name": "asofter/yii2-imperavi-redactor",
+    "name": "bariew/yii2-imperavi-redactor",
     "description": "Imperavi Redactor WYSIWYG widget (OEM-licensed for Yii 2)",
     "keywords": ["yii", "imperavi redactor", "imperavi"],
     "type": "yii2-extension",
@@ -24,6 +24,10 @@
         {
             "name": "Alexander Yaremchuk",
             "email": "alwex10@gmail.com"
+        },
+        {
+            "name": "Pavel Bariev",
+            "email": "bariew@yandex.ru"
         }
     ],
     "require": {
