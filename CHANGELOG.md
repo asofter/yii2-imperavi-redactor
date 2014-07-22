@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.4
+------
+
+- Added file and image upload actions.
+
 1.3
 ------
 

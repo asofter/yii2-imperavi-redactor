@@ -1,93 +1,121 @@
 <?php
+/**
+ * FileUpload class file.
+ * @copyright (c) 2014, Galament
+ * @license http://www.opensource.org/licenses/bsd-license.php
+ */
 
 namespace yii\imperavi\actions;
 
 use yii\base\Action;
+use yii\imperavi\models\File;
+use yii\web\Response;
 use \yii\web\UploadedFile;
-use \Yii;
-use \yii\web\HttpException;
 
 /**
- * Redactor widget file upload action.
+ * Uploads Imperavi widget files.
  *
- * @param string $attr Model attribute
- * @throws HttpException
+ * @Usage:
+ *
+ * 1. Attach these actions in your controller actions() method, e.g.:
+ *     public function actions()
+        {
+            $path = "/files/".$this->module->id."/".$this->id."/".Yii::$app->user->id;
+            return [
+                'file-upload'    => [
+                    'class'         => 'yii\imperavi\actions\FileUpload',
+                    'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                    'uploadUrl'     => $path
+                ],
+                'image-upload'    => [
+                    'class'         => 'yii\imperavi\actions\ImageUpload',
+                    'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                    'uploadUrl'     => $path
+                ],
+                'image-list'    => [
+                    'class'         => 'yii\imperavi\actions\ImageList',
+                    'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                    'uploadUrl'     => $path
+                ],
+            ];
+        }
+ * 2. Set upload options in your imperavi widget, e.g.:
+ *
+    'fileUpload' => Url::toRoute(['file-upload', 'attr'=>'content']),
+    'imageUpload' => Url::toRoute(['image-upload', 'attr'=>'content']),
+    'imageGetJson' => Url::toRoute(['image-list', 'attr'=>'content']),
+    'imageUploadErrorCallback'  => new \yii\web\JsExpression('function(json) { alert(json.error); }'),
+    'fileUploadErrorCallback'  => new \yii\web\JsExpression('function(json) { alert(json.error); }'),
+ *
+ * * You can also redefine action 'customRules' attribute for file validation.
+ *
+ * @author Pavel Bariev <bariew@yandex.ru>
  */
-class FileUpload extends Action {
-
+class FileUpload extends Action
+{
+    /**
+     * @var string folder path to store uploaded files.
+     */
     public $uploadPath;
+
+    /**
+     * @var string url to get file list from.
+     */
     public $uploadUrl;
-    public $uploadCreate = false;
+
+    /**
+     * @var integer upload folder permissions.
+     */
     public $permissions = 0774;
 
-    public function run($attr) {
-        $name = strtolower($this->controller->id);
-        $attribute = strtolower((string) $attr);
-        if (!$file = UploadedFile::getInstanceByName('file')) {
-            throw new HttpException(500, json_encode(
-                array('error' => 'Could not upload file.')
-            ));
-        }
-        if ($this->uploadPath === null) {
-            $path = \Yii::$app->basePath . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'uploads';
-            $this->uploadPath = realpath($path);
-            if ($this->uploadPath === false && $this->uploadCreate === true) {
-                if (!mkdir($path, $this->permissions, true)) {
-                    throw new HttpException(500, json_encode(
-                        array('error' => 'Could not create upload folder "' . $path . '".')
-                    ));
-                }
-            }
-        }
-        if ($this->uploadUrl === null) {
-            $this->uploadUrl = \Yii::$app->request->baseUrl . '/uploads';
-        }
+    /**
+     * @var array file validation rules (see yii\base\Model::rules() description)
+     */
+    public $customRules = [
+        [['file'], 'file', 'skipOnError' => false, 'skipOnEmpty' => false, 'maxSize' => 10000000,
+           'types' => ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'rar', 'zip', 'tar', 'gz', 'mp3',
+               'wav', 'mid', 'xml', 'json', 'csv', 'txt', 'odt', 'psd']]
+    ];
 
-        // Make Yii think this is a AJAX request.
-        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
-        $attributePath = $this->uploadPath . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $attribute;
-        $fileName = $this->sanitizeFilename($file->name);
-        if (!is_dir($attributePath)) {
-            if (!mkdir($attributePath, $this->permissions, true)) {
-                throw new HttpException(500, json_encode(
-                    array('error' => 'Could not create folder "' . $attributePath . '". Make sure "uploads" folder is writable.')
-                ));
-            }
-        }
-        $path = $attributePath . DIRECTORY_SEPARATOR . $fileName;
-        if (file_exists($path) || !$file->saveAs($path)) {
-            throw new HttpException(500, json_encode(
-                array('error' => 'Could not save file or file exists: "' . $path . '".')
-            ));
-        }
-        $attributeUrl = $this->uploadUrl . '/' . $name . '/' . $attribute . '/' . $fileName;
-        $data = array(
-            'filelink' => $attributeUrl,
-            'filename' => $fileName,
-        );
-        echo json_encode($data);
-        exit;
+    /**
+     * Disables csrf post validation.
+     */
+    public function init()
+    {
+        $this->controller->enableCsrfValidation = false;
+        parent::init();
     }
 
-    protected function sanitizeFilename($name) {
-        // char replace table found at: http://www.php.net/manual/en/function.strtr.php#98669
-        $replaceChars = array(
-            'Š' => 'S', 'š' => 's', 'Ð' => 'Dj', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
-            'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I',
-            'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U',
-            'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
-            'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i',
-            'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u',
-            'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f'
-        );
-        $name = strtr($name, $replaceChars);
-        // convert & to "and", @ to "at", and # to "number"
-        $name = preg_replace(array('/[\&]/', '/[\@]/', '/[\#]/'), array('-and-', '-at-', '-number-'), $name);
-        $name = preg_replace('/[^(\x20-\x7F)]*/', '', $name); // removes any special chars we missed
-        $name = str_replace(' ', '-', $name); // convert space to hyphen
-        $name = str_replace('\'', '', $name); // removes apostrophes
-        $name = preg_replace('/[^\w\-\.]+/', '', $name); // remove non-word chars (leaving hyphens and periods)
-        $name = preg_replace('/[\-]+/', '-', $name); // converts groups of hyphens into one
-        return strtolower($name);
+    /**
+     * Uploads file.
+     * @param string $attr Owner model attribute name.
+     * @return array json response.
+     */
+    public function run($attr)
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new File();
+        $model->setAttributes([
+            'ownerAttribute'=> $attr,
+            'uploadUrl'     => $this->uploadUrl,
+            'uploadPath'    => $this->uploadPath,
+            'permissions'   => $this->permissions,
+            'customRules'   => $this->customRules,
+            'file'          => UploadedFile::getInstanceByName('file')
+        ], false);
+
+        return $model->validate()
+            ? ['filelink' => $model->getDirUrl() . $model->getFileName(), "filename" => $model->getFileName()]
+            : $this->error($model->firstErrors);
+    }
+
+    /**
+     * Returns error.
+     * @param string $message error message.
+     * @return array error message.
+     */
+    protected function error($message)
+    {
+        return array('error' => is_array($message) ? reset($message) : $message);
     }
 }

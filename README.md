@@ -51,6 +51,41 @@ yii\imperavi\Widget::widget([
 ]);
 ```
 
+Using upload actions
+
+```
+ 1. Use your controller actions() method, e.g.:
+    public function actions()
+    {
+        $path = "/files/".$this->module->id."/".$this->id."/".Yii::$app->user->id;
+        return [
+            'file-upload'    => [
+                'class'         => 'yii\imperavi\actions\FileUpload',
+                'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                'uploadUrl'     => $path
+            ],
+            'image-upload'    => [
+                'class'         => 'yii\imperavi\actions\ImageUpload',
+                'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                'uploadUrl'     => $path
+            ],
+            'image-list'    => [
+                'class'         => 'yii\imperavi\actions\ImageList',
+                'uploadPath'    => Yii::getAlias('@app/web'.$path),
+                'uploadUrl'     => $path
+            ],
+        ];
+    }
+ 2. Set upload options in your imperavi widget, e.g.:
+    'fileUpload' => Url::toRoute(['file-upload', 'attr'=>'content']),
+    'imageUpload' => Url::toRoute(['image-upload', 'attr'=>'content']),
+    'imageGetJson' => Url::toRoute(['image-list', 'attr'=>'content']),
+    'imageUploadErrorCallback'  => new \yii\web\JsExpression('function(json) { alert(json.error); }'),
+    'fileUploadErrorCallback'  => new \yii\web\JsExpression('function(json) { alert(json.error); }'),
+
+ * You can also redefine action 'customRules' attribute for file validation.
+```
+
 Installation
 ------------
 
