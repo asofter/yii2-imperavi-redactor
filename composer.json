@@ -1,5 +1,5 @@
 {
-    "name": "bariew/yii2-imperavi-redactor",
+    "name": "asofter/yii2-imperavi-redactor",
     "description": "Imperavi Redactor WYSIWYG widget (OEM-licensed for Yii 2)",
     "keywords": ["yii", "imperavi redactor", "imperavi"],
     "type": "yii2-extension",
