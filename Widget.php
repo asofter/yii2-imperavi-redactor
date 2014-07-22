@@ -106,9 +106,9 @@ class Widget extends \yii\base\Widget
          * Language fix
          * @author <https://github.com/sim2github>
          */
-        $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
-        if($appLanguage != 'en') // By default $language = 'en-US', someone use underscore
-            $this->options['lang'] = $appLanguage;
+        if (!isset($this->options['lang']) || empty($this->options['lang'])) {
+            $this->options['lang'] = strtolower(substr(Yii::$app->language , 0, 2));
+        }
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
