@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
 
 /**
  * @author Alexander Yaremchuk <alwex10@gmail.com>
- * @since 1.0
+ * @since 1.4
  */
 class FontfamilyImperaviRedactorPluginAsset extends AssetBundle
 {

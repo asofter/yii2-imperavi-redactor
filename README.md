@@ -1,4 +1,4 @@
-Imperavi Redactor Widget For Yii2
+Imperavi Redactor 10.0.0 Widget For Yii2
 =======================
 
 Created for [Tourista](http://tourista.me)

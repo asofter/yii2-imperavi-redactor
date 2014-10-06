@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 
 /**
  * @author Alexander Yaremchuk <alwex10@gmail.com>
- * @since 1.3
+ * @since 1.4
  */
 class ImperaviRedactorAsset extends AssetBundle
 {
