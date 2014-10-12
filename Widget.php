@@ -26,7 +26,6 @@ use yii\helpers\Json;
  * @link http://imperavi.com/redactor
  * @license https://github.com/asofter/yii2-imperavi-redactor/blob/master/LICENSE.md
  */
-
 class Widget extends \yii\base\Widget
 {
     /**
@@ -107,14 +106,14 @@ class Widget extends \yii\base\Widget
          * @author <https://github.com/sim2github>
          */
         if (!isset($this->options['lang']) || empty($this->options['lang'])) {
-	        $this->options['lang'] = strtolower(substr(Yii::$app->language , 0, 2));
+            $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
         }
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
             $this->options['plugins'] = $this->plugins;
 
-            foreach($this->options['plugins'] as $plugin) {
+            foreach ($this->options['plugins'] as $plugin) {
                 $this->registerPlugin($plugin);
             }
         }
@@ -128,9 +127,13 @@ class Widget extends \yii\base\Widget
      * Registers a specific Imperavi plugin and the related events
      * @param string $name the name of the Imperavi plugin
      */
-    protected function registerPlugin($name) {
-        $name = "yii\\imperavi\\" . ucfirst($name) . "ImperaviRedactorPluginAsset";
-
-        $name::register($this->getView());
+    protected function registerPlugin($name)
+    {
+        $asset = "yii\\imperavi\\" . ucfirst($name) . "ImperaviRedactorPluginAsset";
+        // check exists file before register (it may be custom plugin with not standard file placement)
+        $sourcePath = Yii::$app->vendorPath . '/asofter/yii2-imperavi-redactor' . $asset . '.php';
+        if (is_file($sourcePath)) {
+            $asset::register($this->getView());
+        }
     }
 }
