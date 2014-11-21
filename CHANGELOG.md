@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.6
+------
+
+- Imperavi redactor, plugins and languages updated to 10.0.3
+
 1.5
 ------
 

@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 
 /**
  * @author Alexander Yaremchuk <alwex10@gmail.com>
- * @since 1.4
+ * @since 1.5
  */
 class ImperaviRedactorAsset extends AssetBundle
 {
@@ -27,10 +27,7 @@ class ImperaviRedactorAsset extends AssetBundle
     ];
 
     public function init() {
-        /*
-         * Language fix
-         * @author <https://github.com/sim2github>
-         */
+
         $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
 
         if($appLanguage != 'en')
