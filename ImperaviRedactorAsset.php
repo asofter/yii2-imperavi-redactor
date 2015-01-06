@@ -26,12 +26,13 @@ class ImperaviRedactorAsset extends AssetBundle
         'yii\web\JqueryAsset'
     ];
 
+    public static $lang = 'en';
+
     public function init() {
 
-        $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
-
-        if($appLanguage != 'en')
-            $this->js[] = 'lang/' . $appLanguage . '.js';
+        if (static::$lang != 'en') {
+            $this->js[] = 'lang/' . static::$lang . '.js';
+        }
 
         parent::init();
     }

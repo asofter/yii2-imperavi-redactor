@@ -89,8 +89,26 @@ class Widget extends \yii\base\Widget
             echo Html::textarea($this->attribute, $this->value, $this->htmlOptions);
         }
 
+        $this->setLanguageOption();
         ImperaviRedactorAsset::register($this->getView());
         $this->registerClientScript();
+    }
+
+    /**
+     * Sets the language setting in the options array if not provided
+     * and sets the language property of the main Imperavi Redactor Asset
+     */
+    protected function setLanguageOption()
+    {
+        /*
+         * Language fix
+         * @author <https://github.com/sim2github>
+         */
+        if (!isset($this->options['lang']) || empty($this->options['lang'])) {
+            $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
+        }
+
+        ImperaviRedactorAsset::$lang = $this->options['lang'];
     }
 
     /**
@@ -99,15 +117,6 @@ class Widget extends \yii\base\Widget
     protected function registerClientScript()
     {
         $view = $this->getView();
-
-
-        /*
-         * Language fix
-         * @author <https://github.com/sim2github>
-         */
-        if (!isset($this->options['lang']) || empty($this->options['lang'])) {
-            $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
-        }
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
