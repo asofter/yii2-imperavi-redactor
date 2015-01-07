@@ -10,11 +10,13 @@ namespace yii\imperavi;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\web\AssetBundle;
 
 /**
  * Imperavi Redactor Widget For Yii2 class file.
  *
  * @property array $plugins
+ * @property \yii\web\AssetBundle $assetBundle Imperavi Redactor asset bundle
  *
  * @author Veaceslav Medvedev <slavcopost@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
@@ -65,6 +67,11 @@ class Widget extends \yii\base\Widget
     public $value = '';
 
     /**
+     * @var \yii\web\AssetBundle|null Imperavi Redactor Asset bundle
+     */
+    protected $_assetBundle = null;
+
+    /**
      * Initializes the widget.
      * If you override this method, make sure you call the parent implementation first.
      */
@@ -89,26 +96,29 @@ class Widget extends \yii\base\Widget
             echo Html::textarea($this->attribute, $this->value, $this->htmlOptions);
         }
 
-        $this->setLanguageOption();
-        ImperaviRedactorAsset::register($this->getView());
+        $this->registerRedactorAsset();
         $this->registerClientScript();
     }
 
     /**
-     * Sets the language setting in the options array if not provided
-     * and sets the language property of the main Imperavi Redactor Asset
+     * Registers Imperavi Redactor asset bundle
      */
-    protected function setLanguageOption()
+    protected function registerRedactorAsset()
     {
-        /*
-         * Language fix
-         * @author <https://github.com/sim2github>
-         */
-        if (!isset($this->options['lang']) || empty($this->options['lang'])) {
-            $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
+        $this->_assetBundle = ImperaviRedactorAsset::register($this->getView());
+    }
+
+    /**
+     * Returns current asset bundle
+     * @return \yii\web\AssetBundle current asset bundle for Redactor
+     */
+    protected function getAssetBundle()
+    {
+        if (!($this->_assetBundle instanceof AssetBundle)) {
+            $this->registerRedactorAsset();
         }
 
-        ImperaviRedactorAsset::$lang = $this->options['lang'];
+        return $this->_assetBundle;
     }
 
     /**
@@ -117,6 +127,17 @@ class Widget extends \yii\base\Widget
     protected function registerClientScript()
     {
         $view = $this->getView();
+
+        /*
+         * Language fix
+         * @author <https://github.com/sim2github>
+         */
+        if (!isset($this->options['lang']) || empty($this->options['lang'])) {
+            $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
+        }
+
+        // Kudos to yiidoc/yii2-redactor for this solution
+        $this->assetBundle->js[] = 'lang/' . $this->options['lang'] . '.js';
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
@@ -146,3 +167,4 @@ class Widget extends \yii\base\Widget
         }
     }
 }
+
