@@ -2383,7 +2383,7 @@
 					html = html.replace(new RegExp('<img(.*?[^>])>', 'gi'), '<img$1 data-verified="redactor">');
 					html = html.replace(new RegExp('<span(.*?)>', 'gi'), '<span$1 data-verified="redactor">');
 
-					var matches = html.match(new RegExp('<(span|img)(.*?)style="(.*?)"(.*?[^>])>', 'gi'));
+					var matches = html.match(new RegExp('<(span|img)([^>]*)style="(.*?)"(.*?[^>])>', 'gi'));
 					if (matches)
 					{
 						var len = matches.length;
