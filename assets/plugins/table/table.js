@@ -55,9 +55,7 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 			},
 			insert: function()
 			{
-				this.placeholder.remove();
-				this.clean.cleanEmptyParagraph();
-				
+
 				var rows = $('#redactor-table-rows').val(),
 					columns = $('#redactor-table-columns').val(),
 					$tableBox = $('<div>'),
@@ -88,6 +86,7 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 				$tableBox.append($table);
 				var html = $tableBox.html();
 
+
 				this.modal.close();
 				this.selection.restore();
 
@@ -103,7 +102,7 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 				}
 				else
 				{
-					this.insert.html(html, false);
+					this.insert.html(html);
 				}
 
 				this.selection.restore();

@@ -20,7 +20,7 @@ use yii\helpers\Json;
  * @author Alexander Makarov <sam@rmcreative.ru>
  * @author Alexander Yaremchuk <alwex10@gmail.com>
  *
- * @version 1.8
+ * @version 2.0
  *
  * @link https://github.com/asofter/yii2-imperavi-redactor
  * @link http://imperavi.com/redactor
