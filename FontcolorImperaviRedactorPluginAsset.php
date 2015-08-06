@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class FontcolorImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/fontcolor';
     public $js = [
         'fontcolor.js',
     ];
@@ -24,4 +23,9 @@ class FontcolorImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/fontcolor";
+        parent::init();
+    }
 }

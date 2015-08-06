@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class CounterImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/counter';
     public $js = [
         'counter.js',
     ];
@@ -24,4 +23,10 @@ class CounterImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/counter";
+        parent::init();
+    }
 }

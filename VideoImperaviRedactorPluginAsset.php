@@ -11,8 +11,6 @@ use yii\web\AssetBundle;
 
 class VideoImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/video';
-
     public $js = [
         'video.js',
     ];
@@ -23,5 +21,9 @@ class VideoImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
-
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/video";
+        parent::init();
+    }
 }

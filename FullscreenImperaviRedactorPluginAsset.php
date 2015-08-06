@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class FullscreenImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/fullscreen';
     public $js = [
         'fullscreen.js'
     ];
@@ -24,4 +23,9 @@ class FullscreenImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/fullscreen";
+        parent::init();
+    }
 }

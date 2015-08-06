@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class TextexpanderImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/textexpander';
     public $js = [
         'textexpander.js',
     ];
@@ -24,4 +23,9 @@ class TextexpanderImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/textexpander";
+        parent::init();
+    }
 }

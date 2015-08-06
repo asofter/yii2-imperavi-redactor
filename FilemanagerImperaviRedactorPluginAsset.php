@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class FilemanagerImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/filemanager';
     public $js = [
         'filemanager.js',
     ];
@@ -24,4 +23,10 @@ class FilemanagerImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/filemanager";
+        parent::init();
+    }
 }

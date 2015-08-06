@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class FontfamilyImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/fontfamily';
     public $js = [
         'fontfamily.js'
     ];
@@ -24,4 +23,9 @@ class FontfamilyImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/fontfamily";
+        parent::init();
+    }
 }

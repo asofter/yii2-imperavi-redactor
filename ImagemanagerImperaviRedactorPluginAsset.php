@@ -5,7 +5,6 @@ use yii\web\AssetBundle;
 
 class ImagemanagerImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/imagemanager';
     public $js = [
         'imagemanager.js'
     ];
@@ -15,4 +14,9 @@ class ImagemanagerImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/imagemanager";
+        parent::init();
+    }
 }

@@ -15,7 +15,6 @@ use yii\web\AssetBundle;
  */
 class ImperaviRedactorAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets';
     public $js = [
         'redactor.js'
     ];
@@ -28,6 +27,7 @@ class ImperaviRedactorAsset extends AssetBundle
 
     public function init() {
 
+        $this->sourcePath = __DIR__."/assets";
         $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
 
         if($appLanguage != 'en')

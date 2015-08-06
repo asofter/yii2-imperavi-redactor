@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class LimiterImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/limiter';
     public $js = [
         'limiter.js',
     ];
@@ -24,4 +23,9 @@ class LimiterImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/limiter";
+        parent::init();
+    }
 }

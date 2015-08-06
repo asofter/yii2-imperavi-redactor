@@ -14,7 +14,6 @@ use yii\web\AssetBundle;
  */
 class DefinedlinksImperaviRedactorPluginAsset extends AssetBundle
 {
-    public $sourcePath = '@yii/imperavi/assets/plugins/definedlinks';
     public $js = [
         'definedlinks.js',
     ];
@@ -24,4 +23,10 @@ class DefinedlinksImperaviRedactorPluginAsset extends AssetBundle
     public $depends = [
         'yii\imperavi\ImperaviRedactorAsset'
     ];
+
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets/plugins/definedlinks";
+        parent::init();
+    }
 }
