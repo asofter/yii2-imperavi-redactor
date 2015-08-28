@@ -1,7 +1,7 @@
-Imperavi Redactor 10.0.2 Widget For Yii2
+Imperavi Redactor 10.2.3 Widget For Yii2
 =======================
 
-Created for [Tourista](http://tourista.me)
+Created for [Experitus](http://experitus.com/)
 
 `ImperaviRedactorWidget` is a wrapper for [Imperavi Redactor](http://imperavi.com/redactor/),
 a high quality WYSIWYG editor.
