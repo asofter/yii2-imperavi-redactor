@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.3
+------
+
+- Imperavi redactor updated to 10.2.4
+
 2.0.2
 ------
 
