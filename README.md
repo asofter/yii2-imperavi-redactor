@@ -28,6 +28,18 @@ yii\imperavi\Widget::widget([
 ]);
 ```
 
+Using ActiveForm
+
+```php
+use yii\imperavi\Widget;
+use yii\widgets\ActiveForm;
+
+$form = ActiveForm::begin();
+
+echo $form->field($model, 'my_field')->widget(Widget::classname(), 'options' => []);
+```
+
+
 Alternatively you can attach Redactor to already existing DOM element by calling:
 
 ```php
