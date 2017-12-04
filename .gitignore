@@ -61,8 +61,6 @@ t*mp
 tmp*
 ~*
 *.~*
-*.bak
-*.swp
 ### Node template
 # Logs
 logs
