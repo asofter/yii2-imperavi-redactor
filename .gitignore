@@ -123,4 +123,5 @@ typings/
 # dotenv environment variables file
 .env
 
-
+# ignore lock files in plugins
+package-lock.json
