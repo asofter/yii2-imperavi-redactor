@@ -18,7 +18,7 @@ yii\imperavi\Widget::widget([
 	'attribute' => 'my_field',
 
 	// or just for input field
-	'name' => 'my_input_name',
+	'attribute' => 'my_input_name',
 
 	// Some options, see http://imperavi.com/redactor/docs/
 	'options' => [
