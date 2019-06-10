@@ -1,0 +1,10 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "babel assets/redactor.js assets/redactor-min.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
