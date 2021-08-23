@@ -89,8 +89,9 @@ class Widget extends \yii\base\Widget
             echo Html::textarea($this->attribute, $this->value, $this->htmlOptions);
         }
 
+        $appLanguage = strtolower(substr(Yii::$app->language , 0, 2)); //First 2 letters
         //register asset and configure language from options
-        ImperaviRedactorAsset::register($this->getView())->language = $this->options['lang'];
+        ImperaviRedactorAsset::register($this->getView())->language = $this->options['lang'] ?? $appLanguage;
         $this->registerClientScript();
     }
 
