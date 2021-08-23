@@ -10,13 +10,11 @@ namespace yii\imperavi;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\web\AssetBundle;
 
 /**
  * Imperavi Redactor Widget For Yii2 class file.
  *
  * @property array $plugins
- * @property \yii\web\AssetBundle $assetBundle Imperavi Redactor asset bundle
  *
  * @author Veaceslav Medvedev <slavcopost@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
@@ -67,11 +65,6 @@ class Widget extends \yii\base\Widget
     public $value = '';
 
     /**
-     * @var \yii\web\AssetBundle|null Imperavi Redactor Asset bundle
-     */
-    protected $_assetBundle = null;
-
-    /**
      * Initializes the widget.
      * If you override this method, make sure you call the parent implementation first.
      */
@@ -96,29 +89,9 @@ class Widget extends \yii\base\Widget
             echo Html::textarea($this->attribute, $this->value, $this->htmlOptions);
         }
 
-        $this->registerRedactorAsset();
+        //register asset and configure language from options
+        ImperaviRedactorAsset::register($this->getView())->language = $this->options['lang'];
         $this->registerClientScript();
-    }
-
-    /**
-     * Registers Imperavi Redactor asset bundle
-     */
-    protected function registerRedactorAsset()
-    {
-        $this->_assetBundle = ImperaviRedactorAsset::register($this->getView());
-    }
-
-    /**
-     * Returns current asset bundle
-     * @return \yii\web\AssetBundle current asset bundle for Redactor
-     */
-    protected function getAssetBundle()
-    {
-        if (!($this->_assetBundle instanceof AssetBundle)) {
-            $this->registerRedactorAsset();
-        }
-
-        return $this->_assetBundle;
     }
 
     /**
@@ -128,6 +101,7 @@ class Widget extends \yii\base\Widget
     {
         $view = $this->getView();
 
+
         /*
          * Language fix
          * @author <https://github.com/sim2github>
@@ -135,9 +109,6 @@ class Widget extends \yii\base\Widget
         if (!isset($this->options['lang']) || empty($this->options['lang'])) {
             $this->options['lang'] = strtolower(substr(Yii::$app->language, 0, 2));
         }
-
-        // Kudos to yiidoc/yii2-redactor for this solution
-        $this->assetBundle->js[] = 'lang/' . $this->options['lang'] . '.js';
 
         // Insert plugins in options
         if (!empty($this->plugins)) {
